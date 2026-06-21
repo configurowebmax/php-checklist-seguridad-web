@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+vendor/
+
+# Entornos y secretos
+.env
+.env.local
+config.local.php
+*.secret
+*.key
+
+# Logs
+*.log
+logs/
+
+# Editores / IDE
+.vscode/
+.idea/
+*.swp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build / caché
+dist/
+build/
+.cache/
+.tmp/

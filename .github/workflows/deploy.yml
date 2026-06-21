@@ -1,0 +1,53 @@
+name: Deploy a Hostinger
+
+# =====================================================================
+#  Deploy automático a Hostinger por FTP en cada push a main.
+#  Requiere 3 Secrets en el repo (los setea Push-App-A-GitHub.ps1):
+#    FTP_SERVER   -> 157.173.213.220
+#    FTP_USERNAME -> u895241130.demoscweb.com
+#    FTP_PASSWORD -> (password FTP)
+#
+#  El contenido de este repo se sube a:  /public_html/github/php-checklist-seguridad-web/
+# =====================================================================
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch: # permite ejecutarlo a mano desde la pestaña Actions
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # histórico completo (útil si luego añades cache de deltas)
+
+      - name: Deploy FTP a Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Origen: raíz del repo. Destino: carpeta propia por app.
+          local-dir: ./
+          server-dir: /public_html/github/php-checklist-seguridad-web/
+          # No borrar archivos que existan previamente en el servidor
+          # (evita perder config.local.php u otros archivos sensibles subidos a mano)
+          dangerous-clean-slate: false
+          # Excluir archivos que NO deben ir al hosting
+          exclude: |
+            **/.git/**
+            **/.gitignore
+            **/node_modules/**
+            **/vendor/**
+            **/*.md
+            **/.vscode/**
+            **/.idea/**
+            **/Thumbs.db
+            **/.DS_Store
+            **/*.log
