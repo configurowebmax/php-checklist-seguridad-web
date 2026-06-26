@@ -21,3 +21,7 @@ HTML · CSS · JavaScript (Vanilla) · PHP
 ---
 
 &copy; 2026 [ConfiguroWeb](https://configuroweb.com).
+
+## Colección de Herramientas
+
+[Colección de 30 Herramientas Web Open Source Útiles](https://configuroweb.com/coleccion-de-30-herramientas-web-open-source-utiles)
